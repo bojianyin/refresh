@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1">
+	<title>Document</title>
+	<script src="jquery-1.11.3.min.js"></script>
+	<style>
+	*{padding:0;margin:0;}
+	header{
+		height:1rem;background: green;position: fixed;top:0;left:0;width: 100%;
+	}
+	.load{height: 2rem;background:#ccc;line-height:2rem;text-align:center;transition:.2s linear;overflow: hidden;}
+	</style>
+</head>
+<body>
+	<header>
+		
+	</header>
+	<div style="height:1rem"></div>
+	<ul>
+		<li>111111111</li>
+		<li>111111111</li>
+		<li>111111111</li>
+		<li>111111111</li>
+		<li>111111111</li>
+
+		<li>111111111</li>
+		<li>111111111</li>
+		<li>111111111</li>
+		<li>111111111</li>
+		<li>111111111</li>
+		<li>111111111</li>
+
+		<li>111111111</li>
+		<li>111111111</li>
+		<li>111111111</li>
+
+		<li>22222222222</li>
+		<li>111111111</li>
+		<li>111111111</li>
+		<li>111111111</li>
+		<li>111111111</li>
+		<li>2222222222222</li>
+		<li>111111111</li>
+
+		<li>111111111</li>
+		<li>111111111</li>
+		<li>111111111</li>
+		<li>111111111</li>
+		<li>111111111</li>
+		<li>111111111</li>
+
+		<li>222222222222</li>
+		<li>111111111</li>
+		<li>2222222222</li>
+
+		<li>111111111</li>
+		<li>111111111</li>
+	</ul>
+	<div style="display:none" class="load">上啦加载更多</div>
+</body>
+<script>
+	document.documentElement.style.fontSize=innerWidth/16+"px";
+	onresize=function(){
+		document.documentElement.style.fontSize=innerWidth/16+"px";
+	}
+	var pay,pax;
+	function ifs(){
+		var hei=$("body").height();
+		var max_scroll=hei-outerHeight;
+		var scr=$(document).scrollTop();
+		if(scr==max_scroll){
+			$(".load").show();
+			$("body").unbind("touchend");
+			$("body").unbind("touchstart");
+			$("body").unbind("touchmove");
+			$("body").bind("touchstart",function(event){
+				pax="";
+				pay=event.originalEvent.touches[0].pageY;
+				$(".load").css({"height":"2rem"});
+			})
+			$("body").bind("touchmove",function(e){
+				var now=e.originalEvent.touches[0].pageY;
+				pax=pay-now;	
+			})
+			$("body").bind("touchend",function(e){
+				if($(".load").html()=="上啦加载更多"){
+					if(pax>0&&pax>=60){
+						$(".load").html("加载中...")
+						$(".load").css({"height":"2rem"});
+					}else{
+						$(".load").css({"height":"0"})
+					}
+				}
+			})
+		}
+	}
+	$(document).scroll(function(){
+		ifs();
+	})
+</script>
+</html>
